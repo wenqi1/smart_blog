@@ -30,7 +30,7 @@ public class DynamicDataSourceConfig {
      */
     @Bean
     @ConfigurationProperties("spring.datasource.druid.mysql")
-    public DataSource firstDataSource() {
+    public DataSource mysqlDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
@@ -41,25 +41,25 @@ public class DynamicDataSourceConfig {
      */
     @Bean
     @ConfigurationProperties("spring.datasource.druid.postgresql")
-    public DataSource secondDataSource() {
+    public DataSource postgresqlDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
     /**
      * 实例化DynamicDataSource
      *
-     * @param firstDataSource firstDataSource
-     * @param secondDataSource secondDataSource
+     * @param mysqlDataSource mySQLDataSource
+     * @param postgresqlDataSource postgresqlDataSource
      * @return DynamicDataSource
      */
     @Bean
     @Primary
-    public DynamicDataSource dynamicDataSource(DataSource firstDataSource, DataSource secondDataSource) {
+    public DynamicDataSource dynamicDataSource(DataSource mysqlDataSource, DataSource postgresqlDataSource) {
         HashMap<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put(DataSourceNames.POSTGRESQL, firstDataSource);
-        targetDataSources.put(DataSourceNames.MYSQL, secondDataSource);
+        targetDataSources.put(DataSourceNames.MYSQL, mysqlDataSource);
+        targetDataSources.put(DataSourceNames.POSTGRESQL, postgresqlDataSource);
 
-        return new DynamicDataSource(targetDataSources, firstDataSource);
+        return new DynamicDataSource(targetDataSources, mysqlDataSource);
     }
 
     /**
