@@ -75,20 +75,18 @@
         <root level="info">
             <appender-ref ref="stdout" />
             <appender-ref ref="infoFile" />
-            <appender-ref ref="errorFile" />
         </root>
     </springProfile>
     <springProfile name="test">
         <root level="debug">
             <appender-ref ref="stdout" />
             <appender-ref ref="infoFile" />
-            <appender-ref ref="errorFile" />
         </root>
     </springProfile>
     <!--生产环境:输出到文件-->
     <springProfile name="prod">
         <root level="info">
-            <appender-ref ref="infoFile" />
+            <appender-ref ref="stdout" />
             <appender-ref ref="errorFile" />
         </root>
     </springProfile>

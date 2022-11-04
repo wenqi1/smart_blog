@@ -25,9 +25,8 @@ public interface UserService {
      *
      * @param userName 用户名
      * @param userPassword 密码
-     * @return User
      */
-    User login(String userName, String userPassword);
+    void login(String userName, String userPassword);
 
     /**
      * 注册

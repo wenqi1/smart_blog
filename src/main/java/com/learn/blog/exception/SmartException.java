@@ -1,5 +1,6 @@
 package com.learn.blog.exception;
 
+import com.learn.blog.enums.ResponseCode;
 import lombok.Getter;
 
 /**
@@ -7,9 +8,15 @@ import lombok.Getter;
  */
 @Getter
 public class SmartException extends RuntimeException {
-    private final String errorCode;
+    private final ResponseCode responseCode;
 
-    public SmartException(String errorCode) {
-        this.errorCode = errorCode;
+    public SmartException(ResponseCode responseCode, String message) {
+        super(message);
+        this.responseCode = responseCode;
+    }
+
+    public SmartException(ResponseCode responseCode) {
+        super(responseCode.getMsg());
+        this.responseCode = responseCode;
     }
 }

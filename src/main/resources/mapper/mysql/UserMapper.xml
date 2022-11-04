@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.learn.blog.dao.UserDao" >
 
-    <insert id="insertUserInfo" parameterType="com.learn.blog.model.User" useGeneratedKeys="true">
-        insert into user(user_name,user_password,user_telephone_number)
-        values(#{userName}, #{userPassword}, #{userTelephoneNumber})
-    </insert>
+    <select id="queryUserByPhone" resultType="com.learn.blog.model.User">
+        select * from wq_user where phone = #{phone}
+    </select>
+
+    <select id="queryUserByUsername" resultType="com.learn.blog.model.User">
+        select * from wq_user where name = #{name}
+    </select>
 
     <update id="updateUserInfo" parameterType="com.learn.blog.model.User">
         update user
@@ -19,13 +22,5 @@
         </set>
         WHERE user_id = #{userId, jdbcType=INTEGER}
     </update>
-
-    <select id="getUserInfoById" resultType="com.learn.blog.model.User">
-        select * from user where user_id = #{userId}
-    </select>
-
-    <select id="getUserInfoByUsername" resultType="com.learn.blog.model.User">
-        select * from user where user_name = #{userName} and user_password = #{userPassword}
-    </select>
 
 </mapper>

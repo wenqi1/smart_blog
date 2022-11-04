@@ -2,28 +2,16 @@ package com.learn.blog.model;
 
 import com.learn.blog.enums.ResponseCode;
 import com.learn.blog.utils.MessageUtils;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 基础响应类
  */
+@Getter
+@Setter
 public class BasicResponse {
     private String code;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
     private String msg;
 
@@ -32,5 +20,8 @@ public class BasicResponse {
         this.msg = MessageUtils.getMessage(responseCode.getMsg());
     }
 
-
+    public BasicResponse(ResponseCode responseCode, String msg){
+        this.code = responseCode.getCode();
+        this.msg = msg;
+    }
 }
