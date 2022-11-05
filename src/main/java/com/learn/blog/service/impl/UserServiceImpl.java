@@ -44,10 +44,17 @@ public class UserServiceImpl implements UserService {
     @DataSourceSwitch(name = DataSourceNames.POSTGRESQL)
     public void register(User user) {
         // 判断手机号是否已被注册
-        User existUser = userDao.queryUserByPhone(user.getPhone());
+        User existUser = null;
+        try {
+            existUser = userDao.queryUserByPhone(user.getPhone());
+        } catch (Exception e) {
+            throw new SmartException(ResponseCode.FAILURE, e);
+        }
         if (existUser != null) {
             throw new SmartException(ResponseCode.PHONE_EXIST);
         }
+
+        // 注册新用户
         user.setId(snowflakeIdUtils.nextId());
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());

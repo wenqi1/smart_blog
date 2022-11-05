@@ -2,6 +2,9 @@ package com.learn.blog.service;
 
 import com.learn.blog.model.User;
 
+/**
+ * 用户service层
+ */
 public interface UserService {
     /**
      * 用户登录

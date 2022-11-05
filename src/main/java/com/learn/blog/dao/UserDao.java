@@ -4,6 +4,9 @@ import com.learn.blog.model.User;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
+/**
+ * 用户dao层
+ */
 @Repository
 public interface UserDao extends Mapper<User> {
     /**
