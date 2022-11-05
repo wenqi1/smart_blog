@@ -10,6 +10,7 @@ import com.learn.blog.service.UserService;
 import com.learn.blog.utils.SnowflakeIdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -23,18 +24,19 @@ public class UserServiceImpl implements UserService {
     private SnowflakeIdUtils snowflakeIdUtils;
 
     @Override
-    public boolean updateUserInfo(User user) {
-        return false;
-    }
+    @DataSourceSwitch(name = DataSourceNames.POSTGRESQL)
+    public User login(String phone, String userPassword) {
+        User user = null;
+        try {
+            user = userDao.queryUserByPhone(phone);
+        } catch (Exception e) {
+            throw new SmartException(ResponseCode.FAILURE, e);
+        }
 
-    @Override
-    public User getUserInfoById(Integer uId) {
+        if (user != null && user.getPassword().equals(userPassword)) {
+            return user;
+        }
         return null;
-    }
-
-    @Override
-    public void login(String userName, String userPassword) {
-        User user = userDao.queryUserByUsername(userName);
 
     }
 
@@ -52,8 +54,28 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.insert(user);
         } catch (Exception e) {
-            throw new SmartException(ResponseCode.FAILURE, e.getMessage());
+            throw new SmartException(ResponseCode.FAILURE, e);
         }
 
+    }
+
+    @Override
+    @DataSourceSwitch(name = DataSourceNames.POSTGRESQL)
+    public void update(User user) {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("phone", user.getPhone());
+        user.setUpdateTime(new Date());
+        int result;
+        try {
+             result = userDao.updateByExampleSelective(user, example);
+        } catch (Exception e) {
+            throw new SmartException(ResponseCode.FAILURE, e);
+        }
+
+        Object[] arg = new Object[]{user.getPhone()};
+        if (result != 1) {
+            throw new SmartException(ResponseCode.USER_NOT_EXIST, arg);
+        }
     }
 }

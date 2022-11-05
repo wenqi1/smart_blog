@@ -10,9 +10,20 @@ import lombok.Getter;
 public class SmartException extends RuntimeException {
     private final ResponseCode responseCode;
 
-    public SmartException(ResponseCode responseCode, String message) {
-        super(message);
+    private Object[] data;
+
+    private Exception exception;
+
+    public SmartException(ResponseCode responseCode, Object[] data) {
+        super(responseCode.getMsg());
         this.responseCode = responseCode;
+        this.data = data;
+    }
+
+    public SmartException(ResponseCode responseCode, Exception e) {
+        super(responseCode.getMsg());
+        this.responseCode = responseCode;
+        this.exception = e;
     }
 
     public SmartException(ResponseCode responseCode) {

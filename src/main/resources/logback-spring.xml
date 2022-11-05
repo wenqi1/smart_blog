@@ -10,7 +10,7 @@
     <contextName>logback</contextName>
 
     <property resource="application.yml"/>
-    <property name="LOG_PATH" value="/Users/wenqi/IdeaProjects"/>
+    <property name="LOG_PATH" value="/Users/wenqi/Documents/code"/>
     <springProperty scope="context" name="SERVER_PORT" source="server.port"/>
     <springProperty scope="context" name="LOG_NAME" source="spring.application.name"/>
 

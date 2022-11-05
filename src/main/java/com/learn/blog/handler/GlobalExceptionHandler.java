@@ -5,8 +5,6 @@ import com.learn.blog.exception.SmartException;
 import com.learn.blog.model.BasicResponse;
 import com.learn.blog.utils.MessageUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,8 +23,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = SmartException.class)
     @ResponseBody
     public BasicResponse basicExceptionHandle(SmartException exception) {
-        log.error(exception.getMessage());
-        return new BasicResponse(exception.getResponseCode());
+        // 打印异常的堆栈信息
+        exception.getException().printStackTrace();
+        // 打印自定义的message
+        log.error(MessageUtils.getMessage(exception.getResponseCode().getMsg()));
+        return new BasicResponse(exception.getResponseCode(), exception.getData());
     }
 
     /**

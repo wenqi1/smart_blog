@@ -6,21 +6,4 @@
         select * from wq_user where phone = #{phone}
     </select>
 
-    <select id="queryUserByUsername" resultType="com.learn.blog.model.User">
-        select * from wq_user where name = #{name}
-    </select>
-
-    <update id="updateUserInfo" parameterType="com.learn.blog.model.User">
-        update user
-        <set>
-            <if test="userPassword != null">
-                user_password = #{userPassword, jdbcType=VARCHAR},
-            </if>
-            <if test="userEmail != null">
-                user_email = #{userEmail, jdbcType=VARCHAR},
-            </if>
-        </set>
-        WHERE user_id = #{userId, jdbcType=INTEGER}
-    </update>
-
 </mapper>

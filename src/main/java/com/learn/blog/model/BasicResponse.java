@@ -5,6 +5,8 @@ import com.learn.blog.utils.MessageUtils;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.MessageFormat;
+
 /**
  * 基础响应类
  */
@@ -18,6 +20,12 @@ public class BasicResponse {
     public BasicResponse(ResponseCode responseCode) {
         this.code = responseCode.getCode();
         this.msg = MessageUtils.getMessage(responseCode.getMsg());
+    }
+
+    public BasicResponse(ResponseCode responseCode, Object[] objects) {
+        this.code = responseCode.getCode();
+        String message = MessageUtils.getMessage(responseCode.getMsg());
+        this.msg = MessageFormat.format(message, objects);
     }
 
     public BasicResponse(ResponseCode responseCode, String msg){
