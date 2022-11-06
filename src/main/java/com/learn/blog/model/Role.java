@@ -9,26 +9,16 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 /**
- * 用户
+ * 角色
  */
-@Table(name = "wq_user")
+@Table(name = "wq_role")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Role {
     private Long id;
+    private String code;
     @NotEmpty
     private String name;
-    private String nickname;
-    @NotEmpty
-    private String password;
-    private String email;
-    private String avatar;
     private Date createTime;
-    private Date updateTime;
-    private Date birthday;
-    private Integer age;
-    @NotEmpty
-    private String phone;
 }
-
