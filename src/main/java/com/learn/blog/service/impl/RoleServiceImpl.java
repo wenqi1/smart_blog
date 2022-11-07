@@ -1,6 +1,8 @@
 package com.learn.blog.service.impl;
 
+import com.learn.blog.annotation.DataSourceSwitch;
 import com.learn.blog.dao.RoleDao;
+import com.learn.blog.enums.DataSourceNames;
 import com.learn.blog.enums.ResponseCode;
 import com.learn.blog.exception.SmartException;
 import com.learn.blog.model.Role;
@@ -22,6 +24,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
+    @DataSourceSwitch(name = DataSourceNames.POSTGRESQL)
     public void addRole(Role role) {
         role.setId(snowflakeIdUtils.nextId());
         role.setCreateTime(new Date());
