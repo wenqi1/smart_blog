@@ -17,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Role {
     private Long id;
+    @NotEmpty
     private String code;
     @NotEmpty
     private String name;
