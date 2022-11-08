@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 角色与资源关系
@@ -16,8 +16,8 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class RoleResourceLink {
     private Long id;
-    @NotEmpty
+    @NotNull
     private Long roleId;
-    @NotEmpty
+    @NotNull
     private Long resourceId;
 }

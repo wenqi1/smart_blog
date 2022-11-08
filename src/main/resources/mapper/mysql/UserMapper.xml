@@ -6,4 +6,8 @@
         select * from wq_user where phone = #{phone}
     </select>
 
+    <select id="queryUserById" resultType="com.learn.blog.model.User">
+        select * from wq_user where id = cast(#{id} as numeric )
+    </select>
+
 </mapper>

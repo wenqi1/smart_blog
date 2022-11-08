@@ -9,5 +9,11 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Repository
 public interface RoleDao extends Mapper<Role> {
-
+    /**
+     * 根据主键查找角色
+     *
+     * @param id 主键
+     * @return Role
+     */
+    Role queryRoleById(Long id);
 }

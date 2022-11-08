@@ -24,9 +24,12 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public BasicResponse basicExceptionHandle(SmartException exception) {
         // 打印异常的堆栈信息
-        exception.getException().printStackTrace();
+        if (exception.getException() != null) {
+            exception.getException().printStackTrace();
+        }
         // 打印自定义的message
-        log.error(MessageUtils.getMessage(exception.getResponseCode().getMsg()));
+        String message = MessageUtils.getMessage(exception.getResponseCode().getMsg());
+        log.error(MessageFormat.format(message, exception.getData()));
         return new BasicResponse(exception.getResponseCode(), exception.getData());
     }
 
@@ -63,5 +66,4 @@ public class GlobalExceptionHandler {
         }
         return new BasicResponse(ResponseCode.PARAM_EXCEPTION, msg);
     }
-
 }

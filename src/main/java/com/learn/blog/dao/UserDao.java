@@ -16,4 +16,12 @@ public interface UserDao extends Mapper<User> {
      * @return User
      */
     User queryUserByPhone(String phone);
+
+    /**
+     * 根据主键查找用户
+     *
+     * @param id 主键
+     * @return User
+     */
+    User queryUserById(Long id);
 }
