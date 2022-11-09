@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -63,6 +65,32 @@ public class DynamicDataSourceConfig {
     }
 
     /**
+     * mysqlDataSource配置事务管理器
+     *
+     * @return PlatformTransactionManager
+     */
+    @Bean
+    public PlatformTransactionManager mysqlTransactionManager(DataSource mysqlDataSource) {
+        return new DataSourceTransactionManager(mysqlDataSource);
+    }
+
+    /**
+     * postgresqlDataSource配置事务管理器
+     *
+     * @return PlatformTransactionManager
+     */
+    @Bean
+    public PlatformTransactionManager postgresqlTransactionManager(DataSource postgresqlDataSource) {
+        return new DataSourceTransactionManager(postgresqlDataSource);
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "mybatis.configuration")
+    public org.apache.ibatis.session.Configuration configuration() {
+        return new org.apache.ibatis.session.Configuration();
+    }
+
+    /**
      * 注入SqlSessionFactory
      *
      * @param dynamicDataSource dynamicDataSource
@@ -70,11 +98,14 @@ public class DynamicDataSourceConfig {
      * @throws Exception Exception
      */
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource,
+                                               org.apache.ibatis.session.Configuration configuration) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dynamicDataSource);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().
                 getResources(MAPPER_LOCATION));
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.learn.blog.model");
+        sqlSessionFactoryBean.setConfiguration(configuration);
         return sqlSessionFactoryBean.getObject();
     }
 
