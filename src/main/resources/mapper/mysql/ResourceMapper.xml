@@ -6,4 +6,11 @@
         select * from wq_resource where id = cast(#{id} as numeric )
     </select>
 
+    <select id="queryResourceByIds" resultType="com.learn.blog.model.Resource">
+        select * from wq_resource where id in
+            <foreach item="id" collection="ids" separator="," open="(" close=")">
+                #{id, jdbcType=NUMERIC}
+            </foreach>
+    </select>
+
 </mapper>

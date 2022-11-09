@@ -1,5 +1,8 @@
 package com.learn.blog.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ResponseCode {
     SUCCESS("0000", "smart_success"),
     FAILURE("1111", "smart_failed"),
@@ -18,13 +21,4 @@ public enum ResponseCode {
         this.code = code;
         this.msg = msg;
     }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
 }

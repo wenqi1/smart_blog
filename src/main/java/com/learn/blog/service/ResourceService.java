@@ -22,4 +22,13 @@ public interface ResourceService {
      * @return List<ResourceTreeVo>
      */
     List<ResourceTreeVo> queryResourceTree();
+
+    /**
+     * 递归资源按照树结构组装
+     *
+     * @param resources 资源
+     * @param parentId 父id
+     * @return List<ResourceTreeVo>
+     */
+     List<ResourceTreeVo> recursionResource(List<Resource> resources, long parentId);
 }
