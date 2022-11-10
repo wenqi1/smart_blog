@@ -1,5 +1,7 @@
 package com.learn.blog.controller;
 
+import com.learn.blog.annotation.CheckPermission;
+import com.learn.blog.enums.PermissionNames;
 import com.learn.blog.enums.ResponseCode;
 import com.learn.blog.model.APIResponse;
 import com.learn.blog.service.PermissionService;
@@ -25,6 +27,7 @@ public class PermissionController {
      * @param userId 用户id
      * @return APIResponse<List<ResourceTreeVo>>
      */
+    @CheckPermission(PermissionNames.RESOURCE_MANAGER_ADD)
     @RequestMapping("/query")
     public APIResponse<List<ResourceTreeVo>> queryUserPermission(Long userId) {
         return new APIResponse<>(ResponseCode.SUCCESS, permissionService.queryUserPermission(userId));
