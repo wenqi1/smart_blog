@@ -1,6 +1,7 @@
 package com.learn.blog.aspect;
 
 import com.learn.blog.annotation.CheckPermission;
+import com.learn.blog.config.JwtConfig;
 import com.learn.blog.enums.PermissionNames;
 import com.learn.blog.enums.ResponseCode;
 import com.learn.blog.exception.SmartException;
@@ -11,6 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -27,6 +29,9 @@ import java.util.List;
 @Aspect
 @Component
 public class CheckPermissionAspect implements Ordered {
+    @Autowired
+    private JwtConfig jwtConfig;
+
     @Pointcut("@annotation(com.learn.blog.annotation.CheckPermission)")
     public void checkPermission() {}
 
@@ -52,7 +57,7 @@ public class CheckPermissionAspect implements Ordered {
         if (permissionName != null) {
             String resourceCode = permissionName.getName();
             // 解析token
-            Claims claims = JwtUtils.parseToken(token, "smart_blog");
+            Claims claims = JwtUtils.parseToken(token, jwtConfig.getSalt());
             // 获取token过期时间
             Date expiration = claims.getExpiration();
             Date now = new Date(System.currentTimeMillis());
@@ -60,7 +65,7 @@ public class CheckPermissionAspect implements Ordered {
                 throw new SmartException(ResponseCode.TOKEN_EXPIRESD);
             }
             // 获取token中的权限
-            List<String> permissions = (List<String>) claims.get("permission");
+            List<String> permissions = (List<String>) claims.get(jwtConfig.getPermission());
             if (!permissions.contains(resourceCode)) {
                 throw new SmartException(ResponseCode.USER_NOT_PERMISSION, new Object[]{resourceCode});
             }

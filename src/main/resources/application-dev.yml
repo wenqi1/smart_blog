@@ -78,4 +78,9 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+jwt:
+  configuration:
+    salt: smart_blog
+    expiration: 1800000
+
 

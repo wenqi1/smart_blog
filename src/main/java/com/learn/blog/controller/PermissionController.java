@@ -30,6 +30,6 @@ public class PermissionController {
     @CheckPermission(PermissionNames.RESOURCE_MANAGER_ADD)
     @RequestMapping("/query")
     public APIResponse<List<ResourceTreeVo>> queryUserPermission(Long userId) {
-        return new APIResponse<>(ResponseCode.SUCCESS, permissionService.queryUserPermission(userId));
+        return new APIResponse<>(ResponseCode.SUCCESS, permissionService.queryUserPermissionTree(userId));
     }
 }

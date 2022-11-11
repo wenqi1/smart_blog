@@ -37,7 +37,17 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     @DataSourceSwitch(name = DataSourceNames.POSTGRESQL)
-    public List<ResourceTreeVo> queryUserPermission(Long userId) {
+    public List<ResourceTreeVo> queryUserPermissionTree(Long userId) {
+        return resourceService.recursionResource(queryResourceByUserId(userId), 0L);
+    }
+
+    @Override
+    @DataSourceSwitch(name = DataSourceNames.POSTGRESQL)
+    public List<Resource> queryUserPermission(Long userId) {
+        return queryResourceByUserId(userId);
+    }
+
+    private List<Resource> queryResourceByUserId(Long userId) {
         try {
             // 查询出用户的所有角色关系
             List<UserRoleLink> userRoleLinks = userRoleLinkDao.queryUserRoleLinkByUserId(userId);
@@ -55,11 +65,9 @@ public class PermissionServiceImpl implements PermissionService {
                 allResourceIds.addAll(Arrays.stream(resource.getPath().split(",")).map(Long::parseLong)
                         .collect(Collectors.toList()));
             });
-            List<Resource> allResources = resourceDao.queryResourceByIds(allResourceIds);
-            return resourceService.recursionResource(allResources, 0L);
+            return  resourceDao.queryResourceByIds(allResourceIds);
         } catch (Exception e) {
             throw new SmartException(ResponseCode.FAILURE, e);
         }
-
     }
 }
