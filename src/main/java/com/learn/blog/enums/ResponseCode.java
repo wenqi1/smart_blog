@@ -14,8 +14,9 @@ public enum ResponseCode {
     ROLE_NOT_EXIST("0006", "role_does_not_exist"),
     RESOURCE_NOT_EXIST("0007", "resource_does_not_exist"),
     USER_NOT_LOGIN("0008", "user_not_login"),
-    TOKEN_EXPIRESD("0009", "token_expired"),
-    USER_NOT_PERMISSION("0010", "user_not_permission");
+    TOKEN_EXPIRED("0009", "token_expired"),
+    USER_NOT_PERMISSION("0010", "user_not_permission"),
+    CATEGORY_NOT_EXIST("0011", "category_not_exist");
 
     private final String code;
     private final String msg;

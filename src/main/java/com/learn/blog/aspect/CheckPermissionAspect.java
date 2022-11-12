@@ -62,7 +62,7 @@ public class CheckPermissionAspect implements Ordered {
             Date expiration = claims.getExpiration();
             Date now = new Date(System.currentTimeMillis());
             if (expiration.before(now)) {
-                throw new SmartException(ResponseCode.TOKEN_EXPIRESD);
+                throw new SmartException(ResponseCode.TOKEN_EXPIRED);
             }
             // 获取token中的权限
             List<String> permissions = (List<String>) claims.get(jwtConfig.getPermission());
