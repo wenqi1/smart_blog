@@ -10,22 +10,25 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * 分类
+ * 文章
  */
-@Table(name = "wq_category")
+@Table(name = "wq_article")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Article {
     private Long id;
-    @NotEmpty
-    private String name;
-    private String description;
-    @NotNull
-    private Long parentId;
-    private Integer level;
-    private String path;
     @NotNull
     private Long userId;
+    @NotEmpty
+    private String title;
+    @NotEmpty
+    private String summary;
+    private Integer likeCount;
+    private Integer commentCount;
+    private Integer readCount;
+    private Integer topFlag;
     private Date createTime;
+    private Date updateTime;
+    private Date pushTime;
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.learn.blog.dao.ArticleDao" >
+
+    <select id="queryArticleById" resultType="com.learn.blog.model.Article">
+        select * from wq_article where id = cast(#{id} as numeric )
+    </select>
+
+    <update id="updateArticleById" parameterType="com.learn.blog.model.Article">
+        update wq_article
+            <set>
+                update_time = #{article.updateTime}
+                ,push_time = #{article.pushTime}
+            </set>
+
+        where id = cast(#{article.id} as numeric)
+    </update>
+</mapper>

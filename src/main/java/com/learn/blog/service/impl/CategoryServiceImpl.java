@@ -1,5 +1,6 @@
 package com.learn.blog.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.learn.blog.annotation.DataSourceSwitch;
 import com.learn.blog.dao.CategoryDao;
 import com.learn.blog.dao.UserDao;
@@ -38,11 +39,20 @@ public class CategoryServiceImpl implements CategoryService {
 
         // 判断父分类存不存在
         Long parentId = category.getParentId();
-        if (parentId != null) {
+        if (parentId != 0) {
             Category parentCategory = categoryDao.queryCategoryById(parentId);
             if (parentCategory == null) {
                 throw new SmartException(ResponseCode.CATEGORY_NOT_EXIST, new Object[]{parentId});
             }
+            category.setLevel(parentCategory.getLevel() + 1);
+            if(!StringUtils.isEmpty(parentCategory.getPath())){
+                category.setPath(parentCategory.getPath() + "," + parentCategory.getId());
+            }else{
+                category.setPath(parentCategory.getId().toString());
+            }
+        } else {
+            category.setLevel(1);
+            category.setPath(null);
         }
 
         category.setId(snowflakeIdUtils.nextId());

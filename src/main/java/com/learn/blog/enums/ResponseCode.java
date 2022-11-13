@@ -16,7 +16,10 @@ public enum ResponseCode {
     USER_NOT_LOGIN("0008", "user_not_login"),
     TOKEN_EXPIRED("0009", "token_expired"),
     USER_NOT_PERMISSION("0010", "user_not_permission"),
-    CATEGORY_NOT_EXIST("0011", "category_not_exist");
+    CATEGORY_NOT_EXIST("0011", "category_not_exist"),
+    ARTICLE_CONTENT_IS_EMPTY("0012", "article_content_is_empty"),
+    ARTICLE_NOT_EXIST("0013", "article_not_exist"),
+    TAG_NOT_EXIST("0014", "tag_not_exist");
 
     private final String code;
     private final String msg;
