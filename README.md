@@ -11,3 +11,4 @@ smart blog 基于 Spring Boot 搭建的一个 web 项目，采用了主流的 SS
 * 支持注解的权限校验
 * 支持token的鉴权
 * 支持按钮级别的权限管理
+* 支持评论功能
